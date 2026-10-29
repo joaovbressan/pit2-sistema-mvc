@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block title %}Registrar Vendas - Gestão de Estoque{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-5 mb-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white py-3">
+                <h5 class="card-title mb-0 text-success"><i class="bi bi-cart-plus me-2"></i>Lançar Nova Venda</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('venda.gerenciar_vendas') }}">
+                    <div class="mb-3">
+                        <label for="produto_id" class="form-label">Selecionar Produto</label>
+                        <select class="form-select" id="produto_id" name="produto_id" required>
+                            <option value="" selected disabled>-- Selecione um produto --</option>
+                            {% for p in produtos %}
+                            <option value="{{ p.id }}">
+                                {{ p.nome }} (Estoque: {{ p.quantidade_estoque }} | R$ {{ "%.2f"|format(p.preco) }})
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="quantidade" class="form-label">Quantidade</label>
+                        <input type="number" class="form-control" id="quantidade" name="quantidade" value="1" min="1" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100">
+                        <i class="bi bi-cart-check me-1"></i>Confirmar Venda e Atualizar Estoque
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-7">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white py-3">
+                <h5 class="card-title mb-0"><i class="bi bi-clock-history me-2"></i>Histórico de Vendas</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Data / Hora</th>
+                                <th>Produto</th>
+                                <th class="text-center">Qtd</th>
+                                <th class="text-end">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for v in vendas %}
+                            <tr>
+                                <td><small class="text-muted">{{ v.data_venda.strftime('%d/%m/%Y %H:%M') }}</small></td>
+                                <td>{{ v.produto.nome if v.produto else 'Produto Removido' }}</td>
+                                <td class="text-center"><span class="badge bg-info text-dark">{{ v.quantidade }}</span></td>
+                                <td class="text-end font-monospace text-success fw-bold">R$ {{ "%.2f"|format(v.valor_total) }}</td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="4" class="text-center py-4 text-muted">Nenhuma venda registrada até o momento.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

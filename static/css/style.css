@@ -1,0 +1,36 @@
+/* Estilo do Projeto PIT II - Gestão de Estoque e Vendas (MVC) */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* Tratamento de Strings Longas em Tabelas (Feedback do Thiago - Correção de quebra de layout) */
+.table-ellipsis {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.table-ellipsis th, 
+.table-ellipsis td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
+
+/* Larguras específicas para manter o layout elegante */
+.col-id { width: 60px; }
+.col-nome { width: 35%; }
+.col-cat { width: 20%; }
+.col-preco { width: 15%; }
+.col-qtd { width: 15%; }
+
+.card {
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
